@@ -1,7 +1,7 @@
 package neo.dia.appointmentbooking;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,7 +27,7 @@ public class AppointmentBookingApplication {
 
 			schedule.save( new Appointment(
 				AppointmentType.First, 
-				new Date(System.currentTimeMillis()),
+				LocalDateTime.of(2021, 2, 26, 14, 0),
 				new BookingInfo("Ricardo", "Oiveira", LocalDate.of(1999, 5, 10), "0788677270", "mail@mail.com", "Salut")) );
 
 			System.out.println("Après avoir peuplé : " + schedule.findAll());
