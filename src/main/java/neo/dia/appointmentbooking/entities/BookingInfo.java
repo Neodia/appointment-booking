@@ -95,4 +95,15 @@ public class BookingInfo {
         this.desc = desc;
     }
 
+    @Override
+    public String toString() {
+        return String.format("BookingInfo(%d, %s, %s, %s, %s, %s, %s)",
+            this.getId(),
+            this.getFirstName(),
+            this.getLastName(),
+            this.getBirthDate(),
+            this.getMobilePhone(),
+            this.getEmailAddress(),
+            this.getDesc());
+    }
 }

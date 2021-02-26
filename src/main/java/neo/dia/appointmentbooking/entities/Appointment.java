@@ -62,6 +62,15 @@ public class Appointment {
 
     public void setInfo(BookingInfo info) {
         this.info = info;
-    }  
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Appointment(%d, %s, %s, %s)", 
+            this.getId(),
+            this.getType(),
+            this.getDate(),
+            this.getInfo());
+    }
 
 }
