@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Appointment } from '../appointment';
 import { BookingInfo } from '../booking-info';
+import { ScheduleService } from '../services/schedule-service.service';
 
 @Component({
   selector: 'app-appointment-book',
@@ -17,7 +18,8 @@ export class AppointmentBookComponent implements OnInit {
 
   myDate: Date = null;
   
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder,
+              private scheduleService: ScheduleService) { }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -62,12 +64,18 @@ export class AppointmentBookComponent implements OnInit {
       bookingInfo.bookMail,
       bookingInfo.bookDesc);
 
+    var splittedDate = consult.consultationTime.split(":")
+    var date : Date = consult.consultationDate;
+    date.setHours( splittedDate[0], splittedDate[1] );
+
     var appointment = new Appointment( consult.consultationType,
-      consult.consultationDate,
-      consult.consultationTime,
+      date,
       info );
 
-      console.log(appointment);
-    
+      this.scheduleService.save(appointment)
+        .subscribe(
+          res => console.log(res),
+          err => console.error(err)
+        );
   }
 }

@@ -6,8 +6,8 @@
       <mat-form-field class="mr-3">
         <mat-label>Type of Consultation</mat-label>
         <mat-select formControlName="consultationType">
-          <mat-option value="first">First Consultation</mat-option>
-          <mat-option value="follow-up">Follow-Up Consultation</mat-option>
+          <mat-option value="First">First Consultation</mat-option>
+          <mat-option value="FollowUp">Follow-Up Consultation</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -20,7 +20,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Consultation time" [format]="12" formControlName="consultationTime"
+        <input matInput placeholder="Consultation time" [format]="24" formControlName="consultationTime"
             [ngxTimepicker]="time" [min]="min" [max]="max" readonly>
         <ngx-material-timepicker [minutesGap]="15" #time></ngx-material-timepicker>
       </mat-form-field>
