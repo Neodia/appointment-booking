@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { AppointmentBookComponent } from './appointment-book/appointment-book.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppointmentBookComponent
+    AppointmentBookComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
