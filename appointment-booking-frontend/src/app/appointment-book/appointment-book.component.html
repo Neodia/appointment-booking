@@ -1,1 +1,86 @@
-<p>appointment-book works!</p>
+<mat-horizontal-stepper [linear]="true" #stepper>
+
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Chose appointment date</ng-template>
+      <mat-form-field class="mr-3">
+        <mat-label>Type of Consultation</mat-label>
+        <mat-select formControlName="consultationType">
+          <mat-option value="first">First Consultation</mat-option>
+          <mat-option value="follow-up">Follow-Up Consultation</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="mr-3">
+        <mat-label>Date of Consultation</mat-label>
+        <input matInput (dateChange)="onDateChange()" formControlName="consultationDate" 
+            [matDatepickerFilter]="myFilter" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Consultation time" [format]="12" formControlName="consultationTime"
+            [ngxTimepicker]="time" [min]="min" [max]="max" readonly>
+        <ngx-material-timepicker [minutesGap]="15" #time></ngx-material-timepicker>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup" label="Booking Information">
+    <form [formGroup]="secondFormGroup">
+      <mat-form-field class="mr-3">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="bookFirstName" placeholder="First Name" required>
+      </mat-form-field>
+
+      <mat-form-field class="mr-3">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="bookLastName" placeholder="Last Name" required>
+      </mat-form-field>
+
+      <mat-form-field class="mr-3">
+        <mat-label>Birth Date</mat-label>
+        <input matInput (dateChange)="onDateChange()" formControlName="bookBirthDate" [matDatepicker]="birthPicker">
+        <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+        <mat-datepicker #birthPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="mr-3">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="bookPhone" required>
+      </mat-form-field>
+
+      <mat-form-field class="mr-3">
+        <mat-label>Email address</mat-label>
+        <input matInput formControlName="bookMail" placeholder="example@mail.com" required>
+      </mat-form-field>
+
+      <mat-form-field class="mr-3">
+        <mat-label>Description</mat-label>
+        <textarea matInput 
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5" formControlName="bookDesc" placeholder="Lorem Ipsum">
+        </textarea>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button (click)="onLastNextClick()" mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <!-- <button mat-button matStepperPrevious>Back</button> -->
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

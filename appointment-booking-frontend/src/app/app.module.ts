@@ -8,6 +8,21 @@ import { AppointmentBookComponent } from './appointment-book/appointment-book.co
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatStepperModule } from '@angular/material/stepper'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+
+import {MatButtonModule} from '@angular/material/button'; 
+import {MatSelectModule} from '@angular/material/select'; 
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
+
+
 
 @NgModule({
   declarations: [
@@ -20,9 +35,19 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CdkStepperModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxMaterialTimepickerModule,
     RouterModule.forRoot([
       { path: '', component: AppointmentBookComponent, pathMatch: 'full' },
-    ])
+    ]),
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
