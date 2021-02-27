@@ -1,0 +1,19 @@
+<div class="row" *ngIf="this.sortedAppointments">
+
+    <mat-expansion-panel hideToggle class="w-50">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+            Lundi
+            </mat-panel-title>
+            <mat-panel-description>
+            This is a summary of the content
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        
+        <app-appointment-list-item [appointment]="this.sortedAppointments[1][0]"></app-appointment-list-item>
+
+    </mat-expansion-panel>
+
+</div>
+
+             

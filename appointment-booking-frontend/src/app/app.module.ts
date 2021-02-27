@@ -14,12 +14,20 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CdkStepperModule } from '@angular/cdk/stepper';
+import {MatPaginatorModule} from '@angular/material/paginator'; 
+import { MatCardModule } from '@angular/material/card'; 
+import { MatIconModule } from '@angular/material/icon'; 
+
+import {MatExpansionModule} from '@angular/material/expansion'; 
+import {DatePipe} from '@angular/common';
 
 import {MatButtonModule} from '@angular/material/button'; 
 import {MatSelectModule} from '@angular/material/select'; 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { AppointmentListComponent } from './appointment-list/appointment-list.component';
+import { AppointmentListItemComponent } from './appointment-list-item/appointment-list-item.component';
 
 
 
@@ -28,7 +36,9 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
   declarations: [
     AppComponent,
     AppointmentBookComponent,
-    NavBarComponent
+    NavBarComponent,
+    AppointmentListComponent,
+    AppointmentListItemComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -44,12 +54,17 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMaterialTimepickerModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatExpansionModule,
     RouterModule.forRoot([
       { path: '', component: AppointmentBookComponent, pathMatch: 'full' },
+      { path: 'appointments', component: AppointmentListComponent, pathMatch: 'full' }
     ]),
     NoopAnimationsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
