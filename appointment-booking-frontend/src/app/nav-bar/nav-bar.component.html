@@ -1,7 +1,7 @@
 <header>
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
-    <a class="navbar-brand" [routerLink]="['home']">Appointment App</a>
+    <a class="navbar-brand" [routerLink]="['']">Appointment App</a>
     <button
         class="navbar-toggler"
         type="button"
@@ -15,11 +15,14 @@
     <div
         class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
         [ngClass]="{ show: isExpanded }">
-        <!-- <ul class="navbar-nav flex-grow" *ngIf="this.apiCaller.authService.isLoggedIn()">
-        <li (click)="logout()">
-            <a class="nav-link text-dark">Logout</a>
-        </li>
-        </ul> -->
+         <ul class="navbar-nav flex-grow">
+            <li>
+                <a class="nav-link text-dark" [routerLink]="['']">Booking</a>
+            </li>
+            <li>
+                <a class="nav-link text-dark" [routerLink]="['appointments']">Listing</a>
+            </li>
+        </ul>
     </div>
     </div>
 </nav>
