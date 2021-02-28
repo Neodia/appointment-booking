@@ -12,7 +12,9 @@ export class AppointmentListComponent implements OnInit {
   constructor(private _scheduleService: ScheduleService) { 
     this._scheduleService.findAll().subscribe(
       res => {
-        this.sortedAppointments = res.reduce(function(map, obj) {
+        this.sortedAppointments = res.sort( 
+            (a, b) => a.date.getTime() - b.date.getTime() 
+          ).reduce(function(map, obj) {
           map[ obj.date.getDay().toString() ].push(obj);
           return map;
         }, {1: [], 2: [], 3 : [], 4: [], 5 : []});
