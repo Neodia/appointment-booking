@@ -65,7 +65,7 @@ export class AppointmentBookComponent implements OnInit {
     const day = (d || new Date()).getDay();
     
     // Prevent previous dates and weekends from being selected.
-    return d.toJSON().slice(0, 10) > new Date().toJSON().slice(0, 10) &&
+    return d > new Date() &&
             day !== 0 && day !== 6;
   }
 
