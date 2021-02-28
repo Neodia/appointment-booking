@@ -1,15 +1,19 @@
 <mat-expansion-panel hideToggle class="w-100">
     <mat-expansion-panel-header>
-        <mat-panel-title>
-        {{appointment.info.firstName}} {{appointment.info.lastName}}
+        <mat-panel-title class="col-md-5 my-auto">
+        {{appointment.info.lastName}}
         </mat-panel-title>
-        <mat-panel-description>
-        {{this.dateToShow}}  {{this.startHour}} - {{this.endHour}}
+        <mat-panel-description class="d-flex flex-wrap">
+            <div>{{this.dateToShow}}</div>
+            <div>{{this.startHour}} - {{this.endHour}}</div>
         </mat-panel-description>
     </mat-expansion-panel-header>
 
     <div class="row">
         <div class="col-md-6"><strong>Type : </strong></div>{{ appointment.type }} Consultation
+    </div>
+    <div class="row">
+        <div class="col-md-6"><strong>First name : </strong></div>{{appointment.info.firstName}} 
     </div>
     <div class="row">
         <div class="col-md-6"><strong>Birth date : </strong></div>{{ appointment.info.birthDate }}
