@@ -160,7 +160,13 @@ export class AppointmentBookComponent implements OnInit {
 
       this.scheduleService.save(appointment)
         .subscribe(
-          res => console.log(res),
+          res => {
+            console.log(res);
+            this.firstFormGroup.reset();
+            this.secondFormGroup.reset();
+            this.availableTimes = null;
+            this.myDate = null;
+          },
           err => console.error(err)
         );
   }
