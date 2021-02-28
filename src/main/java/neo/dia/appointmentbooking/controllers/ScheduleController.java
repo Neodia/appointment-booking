@@ -2,6 +2,7 @@ package neo.dia.appointmentbooking.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import neo.dia.appointmentbooking.entities.Appointment;
+import neo.dia.appointmentbooking.entities.TimePeriod;
 import neo.dia.appointmentbooking.repositories.ScheduleRepository;
 
 @RestController
@@ -30,5 +32,12 @@ public class ScheduleController {
     @PostMapping("/appointments")
     public void addAppointment(@RequestBody Appointment appointment) {
         schedule.save(appointment);
+    }
+
+    @GetMapping("/used-periods")
+    public List<TimePeriod> getUsedPeriods() {
+        return this.getAppointments().stream().map( a -> {
+            return new TimePeriod( a.getDate(), a.getDate().plusMinutes(a.getType().getMinutes()) );
+        }).collect(Collectors.toList());
     }
 }
