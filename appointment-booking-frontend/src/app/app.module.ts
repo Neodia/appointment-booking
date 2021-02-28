@@ -17,6 +17,8 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import {MatPaginatorModule} from '@angular/material/paginator'; 
 import { MatCardModule } from '@angular/material/card'; 
 import { MatIconModule } from '@angular/material/icon'; 
+import { MatRadioModule } from '@angular/material/radio'; 
+import {MatDividerModule} from '@angular/material/divider'; 
 
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {DatePipe} from '@angular/common';
@@ -57,6 +59,8 @@ import { AppointmentListItemComponent } from './appointment-list-item/appointmen
     MatCardModule,
     MatPaginatorModule,
     MatIconModule,
+    MatRadioModule,
+    MatDividerModule,
     MatExpansionModule,
     RouterModule.forRoot([
       { path: '', component: AppointmentBookComponent, pathMatch: 'full' },

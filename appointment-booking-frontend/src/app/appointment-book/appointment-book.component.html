@@ -5,7 +5,7 @@
       <ng-template matStepLabel>Chose appointment date</ng-template>
       <mat-form-field class="mr-3">
         <mat-label>Type of Consultation</mat-label>
-        <mat-select formControlName="consultationType">
+        <mat-select (selectionChange)="validateHours()" formControlName="consultationType">
           <mat-option value="First">First Consultation</mat-option>
           <mat-option value="FollowUp">Follow-Up Consultation</mat-option>
         </mat-select>
@@ -13,17 +13,34 @@
 
       <mat-form-field class="mr-3">
         <mat-label>Date of Consultation</mat-label>
-        <input matInput (dateChange)="onDateChange()" formControlName="consultationDate" 
+        <input matInput (dateChange)="validateHours()" formControlName="consultationDate" 
             [matDatepickerFilter]="myFilter" [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
+      <div class="w-100">
+      <mat-radio-group *ngIf="availableTimes" formControlName="consultationTime"
+        aria-labelledby="example-radio-group-label"
+        class="d-flex justify-content-around">
+        
+        <div *ngFor="let hour of availableTimes" class="d-flex flex-column w-auto">
+          <mat-radio-button *ngFor="let time of hour" [value]="time['value']">
+            {{time['toShow']}}
+          </mat-radio-button>
+          <mat-divider [vertical]="true"></mat-divider>
+        </div>
+      </mat-radio-group>
+        
+    </div>
+
+    <!--
       <mat-form-field>
         <input matInput placeholder="Consultation time" [format]="24" formControlName="consultationTime"
             [ngxTimepicker]="time" [min]="min" [max]="max" readonly>
         <ngx-material-timepicker [minutesGap]="15" #time></ngx-material-timepicker>
       </mat-form-field>
+    -->
       <div>
         <button mat-button matStepperNext>Next</button>
       </div>
