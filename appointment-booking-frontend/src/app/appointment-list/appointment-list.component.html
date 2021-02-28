@@ -1,17 +1,21 @@
 <div class="row" *ngIf="this.sortedAppointments">
 
-    <mat-expansion-panel hideToggle class="w-50">
+    <div class="row w-100">
+        <h1 class="text-center m-auto">All Appointments</h1>
+    </div>
+    
+    <mat-expansion-panel *ngFor="let day of [1, 2, 3, 4, 5]" hideToggle class="w-50">
         <mat-expansion-panel-header>
-            <mat-panel-title>
-            Lundi
+            <mat-panel-title class="col-md-6">
+            {{ this.dayOfWeekAsString(day) }}
             </mat-panel-title>
             <mat-panel-description>
-            This is a summary of the content
+            {{ this.sortedAppointments[day].length }} appointment(s)
             </mat-panel-description>
         </mat-expansion-panel-header>
         
-        <app-appointment-list-item [appointment]="this.sortedAppointments[1][0]"></app-appointment-list-item>
-
+        <app-appointment-list-item *ngFor="let appointment of this.sortedAppointments[day]" 
+            [appointment]="appointment"></app-appointment-list-item>
     </mat-expansion-panel>
 
 </div>

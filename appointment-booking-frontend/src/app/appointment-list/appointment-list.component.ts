@@ -25,4 +25,8 @@ export class AppointmentListComponent implements OnInit {
 
   }
 
+  dayOfWeekAsString(dayIndex) {
+    return ["Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][dayIndex] || '';
+  }
+
 }
