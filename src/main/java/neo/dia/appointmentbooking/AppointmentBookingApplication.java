@@ -1,7 +1,8 @@
 package neo.dia.appointmentbooking;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,22 +28,22 @@ public class AppointmentBookingApplication {
 
 			schedule.save( new Appointment(
 				AppointmentType.First, 
-				LocalDateTime.of(2021, 3, 1, 9, 30),
+				ZonedDateTime.of(2021, 3, 1, 9, 30, 0, 0, ZoneId.systemDefault()),
 				new BookingInfo("Ricardo", "Oiveira", LocalDate.of(1999, 5, 10), "078", "mail@mail.com", "Salut")) );
 
 			schedule.save( new Appointment(
 				AppointmentType.First, 
-				LocalDateTime.of(2021, 3, 1, 14, 0),
+				ZonedDateTime.of(2021, 3, 1, 14, 0, 0, 0, ZoneId.systemDefault()),
 				new BookingInfo("Marcus", "Aurelius", LocalDate.of(1999, 5, 10), "078", "mail@mail.com", "Salut")) );
 
 			schedule.save( new Appointment(
 				AppointmentType.FollowUp, 
-				LocalDateTime.of(2021, 3, 3, 10, 0),
+				ZonedDateTime.of(2021, 3, 3, 10, 30, 0, 0, ZoneId.systemDefault()),
 				new BookingInfo("Tim", "Ferris", LocalDate.of(1999, 5, 10), "078", "mail@mail.com", "Salut")) );
 
 			schedule.save( new Appointment(
 				AppointmentType.First, 
-				LocalDateTime.of(2021, 3, 5, 13, 0),
+				ZonedDateTime.of(2021, 3, 5, 13, 0, 0, 0, ZoneId.systemDefault()),
 				new BookingInfo("Matt", "D'Avella", LocalDate.of(1999, 5, 10), "0788677270", "mail@mail.com", "Salut")) );
 			
 			System.out.println("Après avoir peuplé : " + schedule.findAll());

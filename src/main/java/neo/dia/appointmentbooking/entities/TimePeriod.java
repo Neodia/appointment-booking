@@ -1,29 +1,29 @@
 package neo.dia.appointmentbooking.entities;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class TimePeriod {
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private ZonedDateTime startTime;
+    private ZonedDateTime endTime;
 
-    public TimePeriod(LocalDateTime startTime, LocalDateTime endTime) {
+    public TimePeriod(ZonedDateTime startTime, ZonedDateTime endTime) {
         this.setStartTime(startTime);
         this.setEndTime(endTime);
     }
 
-    public LocalDateTime getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
     }
 
-    public LocalDateTime getStartTime() {
+    public ZonedDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(ZonedDateTime startTime) {
         this.startTime = startTime;
     }
 }

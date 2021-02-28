@@ -1,6 +1,6 @@
 package neo.dia.appointmentbooking.entities;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private AppointmentType type;
-    private LocalDateTime date;
+    private ZonedDateTime date;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "info_id", referencedColumnName = "id")
@@ -26,7 +26,7 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(AppointmentType type, LocalDateTime date, BookingInfo info) {
+    public Appointment(AppointmentType type, ZonedDateTime date, BookingInfo info) {
         this.setType(type);
         this.setDate(date);
         this.setInfo(info);
@@ -48,11 +48,11 @@ public class Appointment {
         this.type = type;
     }
 
-    public LocalDateTime getDate() {
+    public ZonedDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(ZonedDateTime date) {
         this.date = date;
     } 
 
