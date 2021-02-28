@@ -14,9 +14,6 @@ export class AppointmentBookComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
-  min: String = "9:00 am";
-  max: String = "5:30 pm";
-
   MINUTES_JUMP = 15;
   schedule : Map<number, DaySchedule> = new Map([
     [1, new DaySchedule("9:00", "12:00", "14:00", "18:00")],
