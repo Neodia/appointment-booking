@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Appointment } from '../appointment';
 import { BookingInfo } from '../booking-info';
 import { ScheduleService } from '../services/schedule-service.service';
+import { TimePeriod } from '../time-period';
 
 @Component({
   selector: 'app-appointment-book',
@@ -13,6 +14,8 @@ import { ScheduleService } from '../services/schedule-service.service';
 export class AppointmentBookComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+
+  usedTimePeriods = null;
 
   MINUTES_JUMP = 15;
   schedule : Map<number, DaySchedule> = new Map([
@@ -27,7 +30,20 @@ export class AppointmentBookComponent implements OnInit {
   myDate: Date = null;
   
   constructor(private _formBuilder: FormBuilder,
-              private scheduleService: ScheduleService) { }
+              private scheduleService: ScheduleService) {
+                this.scheduleService.findAllUsedPeriods().subscribe(
+                  res => {
+                    this.usedTimePeriods = res.reduce( (map, period) => {
+                      let key = period.startTime.toLocaleDateString();
+                      if( !map[key] )
+                        map[key] = [];
+                      map[key].push( period );
+                      return map;
+                    }, {});
+                  },
+                  err => console.error(err)
+                );
+               }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -56,42 +72,69 @@ export class AppointmentBookComponent implements OnInit {
   validateHours = () => {
     var consult = this.firstFormGroup.value;
     if(consult.consultationType && consult.consultationDate) {
-      let map = this.createHoursAvailbleForDay( consult.consultationDate.getDay(), consult.consultationType );
+      let map = this.createHoursAvailbleForDay( consult.consultationDate, consult.consultationType );
       this.availableTimes = Object.values(map);
     }
   }
 
-  createHoursAvailbleForDay(day: number, consultationType: string) {
+  createHoursAvailbleForDay(date: Date, consultationType: string) {
+    let day = date.getDay();
     let consultationLength = consultationType == "First" ? 45 : 30;
-    return this.schedule.get(day).valueArray.reduce( (map, range) => {
-      // Time to test
-      let currentTime = new Date(1, 1, 1, 
-        Number.parseInt(range[0].split(":")[0]),
-        Number.parseInt(range[0].split(":")[1]) );
 
+    // Takes all ranges from day.
+    return this.schedule.get(day).valueArray.reduce( (map, range) => {
+      // Initial hour
+      let currentTime : Date = new Date(date); 
+      currentTime.setHours( Number.parseInt(range[0].split(":")[0]) );
+      currentTime.setMinutes(  Number.parseInt(range[0].split(":")[1]) );
+
+      // End of tested consultation
       let currentTimeEnd = new Date( currentTime.getTime() + consultationLength * 60000 );
 
-      let endTime = new Date(1, 1, 1, 
-        Number.parseInt(range[1].split(":")[0]),
-        Number.parseInt(range[1].split(":")[1]) );
+      // End of range.
+      let endTime : Date = new Date(date); 
+      endTime.setHours( Number.parseInt(range[1].split(":")[0]) );
+      endTime.setMinutes(  Number.parseInt(range[1].split(":")[1]) );
 
       while(currentTimeEnd.getTime() < endTime.getTime()) {
-        if( !map[currentTime.getHours()] )
-          map[currentTime.getHours()] = [];
+        // Only test the period if it's not used already.
+        if( this.periodIsValid( currentTime, currentTimeEnd, this.usedTimePeriods ) ) {
+          let readableStart = currentTime.toLocaleString('fr-CH', { hour: "2-digit", minute: "2-digit" });
+          let readableEnd = currentTimeEnd.toLocaleString('fr-CH', { hour: "2-digit", minute: "2-digit" });  
+          let key = currentTime.getHours()
 
-        let readableStart = currentTime.toLocaleString('fr-CH', { hour: "2-digit", minute: "2-digit" });
-        let readableEnd = currentTimeEnd.toLocaleString('fr-CH', { hour: "2-digit", minute: "2-digit" });
+          if( !map[key] )
+            map[key] = [];
+          map[key].push({
+            "value" : readableStart,
+            "toShow" : readableStart + " to " + readableEnd
+          });
 
-        map[currentTime.getHours()].push({
-          "value" : readableStart,
-          "toShow" : readableStart + " to " + readableEnd
-        });
-
-        currentTime = new Date(currentTime.getTime() + this.MINUTES_JUMP * 60000);
-        currentTimeEnd = new Date(currentTime.getTime() + consultationLength * 60000);
-      }
+          }
+          // Jumps to next time period to test.
+          currentTime = new Date(currentTime.getTime() + this.MINUTES_JUMP * 60000);
+          currentTimeEnd = new Date(currentTime.getTime() + consultationLength * 60000);
+        }
       return map;
     }, {});
+  }
+
+  periodIsValid(start: Date, end: Date, usedTimePeriods: Object) : boolean {
+    let key = start.toLocaleDateString();
+    if( !usedTimePeriods[key] ) // Returns true if there is no UsedPeriod this day.
+      return true;
+    
+    for(let index in Object.values(usedTimePeriods[key])) {
+      let period = usedTimePeriods[key][index];
+
+      let periodStartDate = period.startTime;
+      let periodEndDate = period.endTime;
+
+      // If the start or the end of the tested period is invalid.
+      if ( (start >= periodStartDate && start < periodEndDate) ||
+           (end > periodStartDate && end <= periodEndDate) ) return false;
+    }
+    return true;
   }
 
   onLastNextClick = () => {
