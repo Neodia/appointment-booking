@@ -7,22 +7,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
     
 @Entity
 public class BookingInfo {
     
     @OneToOne(mappedBy = "info")
-    private Appointment appointment;
+    Appointment appointment;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String firstName;
-    private String lastName;
-    private LocalDate birthDate;
-    private String mobilePhone;
-    private String emailAddress;
+    @NotNull(message = "First name is mandatory") private String firstName;
+    @NotNull(message = "Last name is mandatory") private String lastName;
+    @NotNull(message = "Birth name is mandatory") private LocalDate birthDate;
+    @NotNull(message = "Mobile phone is mandatory") private String mobilePhone;
+    @NotNull(message = "Email address is mandatory") private String emailAddress;
     private String desc; // Optional
 
     public BookingInfo() {}

@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Appointment {
@@ -16,12 +17,12 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private AppointmentType type;
-    private ZonedDateTime date;
+    @NotNull(message = "Type is mandatory") private AppointmentType type;
+    @NotNull(message = "Date is mandatory") private ZonedDateTime date;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "info_id", referencedColumnName = "id")
-    private BookingInfo info;
+    @NotNull(message = "Booking is mandatory") private BookingInfo info;
 
     public Appointment() {
     }
