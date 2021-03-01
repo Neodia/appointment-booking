@@ -30,6 +30,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
 import { AppointmentListItemComponent } from './appointment-list-item/appointment-list-item.component';
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 
 
 
@@ -68,7 +69,12 @@ import { AppointmentListItemComponent } from './appointment-list-item/appointmen
     ]),
     NoopAnimationsModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, 
+    {
+      provide: MAT_RADIO_DEFAULT_OPTIONS,
+      useValue: { color: 'primary' },
+  }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
