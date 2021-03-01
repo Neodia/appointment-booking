@@ -31,18 +31,7 @@ export class AppointmentBookComponent implements OnInit {
   
   constructor(private _formBuilder: FormBuilder,
               private scheduleService: ScheduleService) {
-                this.scheduleService.findAllUsedPeriods().subscribe(
-                  res => {
-                    this.usedTimePeriods = res.reduce( (map, period) => {
-                      let key = period.startTime.toLocaleDateString();
-                      if( !map[key] )
-                        map[key] = [];
-                      map[key].push( period );
-                      return map;
-                    }, {});
-                  },
-                  err => console.error(err)
-                );
+                this.fetchUsedPeriods();
                }
 
   ngOnInit() {
@@ -59,6 +48,21 @@ export class AppointmentBookComponent implements OnInit {
       bookMail: ['', Validators.required],
       bookDesc: ['', null]
     });
+  }
+
+  fetchUsedPeriods = () => {
+    this.scheduleService.findAllUsedPeriods().subscribe(
+      res => {
+        this.usedTimePeriods = res.reduce( (map, period) => {
+          let key = period.startTime.toLocaleDateString();
+          if( !map[key] )
+            map[key] = [];
+          map[key].push( period );
+          return map;
+        }, {});
+      },
+      err => console.error(err)
+    );
   }
   
   myFilter = (d: Date | null): boolean => {
@@ -166,6 +170,7 @@ export class AppointmentBookComponent implements OnInit {
             this.secondFormGroup.reset();
             this.availableTimes = null;
             this.myDate = null;
+            this.fetchUsedPeriods();
           },
           err => console.error(err)
         );
